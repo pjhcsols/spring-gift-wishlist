@@ -74,4 +74,11 @@ public class JdbcUserRepository implements UserRepository {
             return Optional.empty();
         }
     }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        String COUNT_BY_EMAIL = "SELECT COUNT(*) FROM users WHERE email = ?";
+        int count = jdbcTemplate.queryForObject(COUNT_BY_EMAIL, Integer.class, email);
+        return count > 0;
+    }
 }

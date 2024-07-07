@@ -3,25 +3,25 @@ package gift.validation;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class ApprovedByMDValidator implements ConstraintValidator<ApprovedByMD, String> {
+public class ValidProductNameValidator implements ConstraintValidator<ValidProductName, String> {
 
     @Override
-    public void initialize(ApprovedByMD constraintAnnotation) {
+    public void initialize(ValidProductName constraintAnnotation) {
 
     }
 
     @Override
     public boolean isValid(String name, ConstraintValidatorContext context) {
         if (name == null) {
-            return true;
+            return true; // Null values are handled separately if needed
         }
 
         return !name.contains("카카오") || isApprovedByMD(name);
     }
 
-    //md 인증
+    // Implement your logic for MD approval
     private boolean isApprovedByMD(String name) {
-
-        return false;
+        // Your logic to check if the product name is approved by MD
+        return false; // Replace with your actual logic
     }
 }

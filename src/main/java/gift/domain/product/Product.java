@@ -20,6 +20,7 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
+    //관리자 상품 컨트롤러
     public void updateAdmin(ProductRequestDTO productRequestDTO, String imageUrl) {
         if (productRequestDTO != null) {
             this.name = productRequestDTO.getName();
@@ -31,6 +32,7 @@ public class Product {
         }
     }
 
+    //상품 컨트롤러
     public void update(ProductRequestDTO productRequestDTO) {
         if (productRequestDTO != null) {
             this.name = productRequestDTO.getName();

@@ -1,12 +1,16 @@
 package gift.controller.user;
 
 import gift.domain.user.User;
+import gift.exception.user.InvalidCredentialsException;
+import gift.exception.user.UserAlreadyExistsException;
+import gift.exception.user.UserNotFoundException;
 import gift.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/users")
@@ -23,8 +27,11 @@ public class UserController {
         try {
             String accessToken = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
             String refreshToken = userService.generateRefreshToken(loginRequest.getEmail());
+
             return ResponseEntity.ok(new JwtResponse(accessToken, refreshToken));
-        } catch (Exception e) {
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        } catch (InvalidCredentialsException e) {
             return ResponseEntity.status(401).body(e.getMessage());
         }
     }
@@ -40,8 +47,8 @@ public class UserController {
         try {
             userService.registerUser(registerRequest.getEmail(), registerRequest.getPassword());
             return ResponseEntity.ok("User registered successfully");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (UserAlreadyExistsException e) {
+            return ResponseEntity.status(400).body(e.getMessage());
         }
     }
 }
@@ -51,9 +58,7 @@ class LoginRequest {
     private String password;
 
     public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
     public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
 }
 
 class RegisterRequest {
@@ -61,9 +66,7 @@ class RegisterRequest {
     private String password;
 
     public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
     public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
 }
 
 class JwtResponse {

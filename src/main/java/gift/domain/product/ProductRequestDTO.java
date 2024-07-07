@@ -1,6 +1,6 @@
 package gift.domain.product;
 
-import gift.validation.ApprovedByMD;
+import gift.validation.ValidProductName;
 import jakarta.validation.constraints.*;
 
 public class ProductRequestDTO {
@@ -8,7 +8,7 @@ public class ProductRequestDTO {
     @NotBlank(message = "상품 이름은 필수입니다.")
     @Size(max = 15, message = "상품 이름은 최대 15자까지 입력할 수 있습니다.")
     @Pattern(regexp = "^[a-zA-Z0-9가-힣()\\[\\]+\\-&/_]*$", message = "상품 이름에 허용되지 않는 특수 문자가 포함되어 있습니다.")
-    @ApprovedByMD //카카오 검증
+    @ValidProductName //카카오 검증
     private String name;
 
     @NotNull(message = "상품 가격은 필수입니다.")

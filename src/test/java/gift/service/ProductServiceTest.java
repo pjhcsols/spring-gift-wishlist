@@ -1,7 +1,9 @@
 package gift.service;
 
-import gift.domain.Product;
-import gift.repository.ProductRepository;
+
+import gift.domain.product.Product;
+import gift.repository.product.ProductRepository;
+import gift.service.product.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
